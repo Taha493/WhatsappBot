@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Remi — AI personal assistant on WhatsApp">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061018"/>
+      <stop offset=".55" stop-color="#0a1f24"/>
+      <stop offset="1" stop-color="#0d2f2f"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx=".85" cy=".2" r=".6">
+      <stop offset="0" stop-color="#25d366" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#25d366" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="1" r=".6">
+      <stop offset="0" stop-color="#128c7e" stop-opacity=".3"/>
+      <stop offset="1" stop-color="#128c7e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4ff08f"/>
+      <stop offset="1" stop-color="#128c7e"/>
+    </linearGradient>
+    <linearGradient id="text" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4ff08f"/>
+      <stop offset=".5" stop-color="#25d366"/>
+      <stop offset="1" stop-color="#8ff5c0"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity=".06"/>
+    </pattern>
+    <style>
+      .sans { font-family: Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; }
+      .title { font-size: 72px; font-weight: 800; letter-spacing: -2.5px; fill: #e9f3ef; }
+      .sub { font-size: 25px; fill: #9fb6ae; }
+      .pill { font-size: 16px; font-weight: 700; fill: #b6f5cf; letter-spacing: 1.5px; }
+      .msg { font-size: 16px; fill: #e9f3ef; }
+      .meta { font-size: 11px; fill: #e9f3ef; fill-opacity: .55; }
+      .b { opacity: 0; animation-duration: 12s; animation-iteration-count: infinite; animation-timing-function: cubic-bezier(.2,.8,.2,1); }
+      .b1 { animation-name: b1; } .b2 { animation-name: b2; } .b3 { animation-name: b3; }
+      .b4 { animation-name: b4; } .b5 { animation-name: b5; } .typing { animation-name: ty; }
+      @keyframes b1 { 0%,4% { opacity: 0; transform: translateY(14px); } 8%,90% { opacity: 1; transform: none; } 96%,100% { opacity: 0; } }
+      @keyframes ty { 0%,10% { opacity: 0; } 12%,20% { opacity: 1; } 22%,100% { opacity: 0; } }
+      @keyframes b2 { 0%,20% { opacity: 0; transform: translateY(14px); } 24%,90% { opacity: 1; transform: none; } 96%,100% { opacity: 0; } }
+      @keyframes b3 { 0%,40% { opacity: 0; transform: translateY(14px); } 44%,90% { opacity: 1; transform: none; } 96%,100% { opacity: 0; } }
+      @keyframes b4 { 0%,56% { opacity: 0; transform: translateY(14px); } 60%,90% { opacity: 1; transform: none; } 96%,100% { opacity: 0; } }
+      @keyframes b5 { 0%,68% { opacity: 0; transform: translateY(14px); } 72%,90% { opacity: 1; transform: none; } 96%,100% { opacity: 0; } }
+      .dot { animation: bounce 1s infinite; }
+      .dot:nth-child(2) { animation-delay: .15s; } .dot:nth-child(3) { animation-delay: .3s; }
+      @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+      .float { animation: float 6s ease-in-out infinite; }
+      @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    </style>
+  </defs>
+
+  <rect width="1200" height="420" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="420" rx="24" fill="url(#glow1)"/>
+  <rect width="1200" height="420" rx="24" fill="url(#glow2)"/>
+  <rect width="1200" height="420" rx="24" fill="url(#dots)"/>
+
+  <!-- Brand -->
+  <g class="float">
+    <g transform="translate(64 78) scale(1.5)">
+      <path d="M24 4C12.4 4 3 12.6 3 23.2c0 5.1 2.2 9.8 5.8 13.2L7 44l8.6-3.6c2.6 1 5.4 1.5 8.4 1.5 11.6 0 21-8.6 21-19.2S35.6 4 24 4z" fill="url(#mark)"/>
+      <path d="M15 23.5l6 6 12-12.5" fill="none" stroke="#052e16" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  <text x="64" y="225" class="sans title">Meet <tspan fill="url(#text)">Remi</tspan></text>
+  <text x="66" y="268" class="sans sub">Your AI personal assistant — inside WhatsApp.</text>
+  <g transform="translate(66 304)">
+    <rect width="462" height="40" rx="20" fill="#25d366" fill-opacity=".12" stroke="#25d366" stroke-opacity=".35"/>
+    <text x="22" y="26" class="sans pill">TASKS · REMINDERS · VOICE NOTES · 24/7</text>
+  </g>
+
+  <!-- Animated chat -->
+  <g transform="translate(700 40)" class="sans">
+    <rect width="436" height="340" rx="22" fill="#0b141a" stroke="#ffffff" stroke-opacity=".08"/>
+    <rect width="436" height="58" rx="22" fill="#1f2c33"/>
+    <rect y="36" width="436" height="22" fill="#1f2c33"/>
+    <circle cx="36" cy="29" r="17" fill="url(#mark)"/>
+    <text x="30" y="35" font-size="16" font-weight="800" fill="#052e16">R</text>
+    <text x="64" y="26" font-size="16" font-weight="700" fill="#e9f3ef">Remi</text>
+    <text x="64" y="44" font-size="12" fill="#25d366">online</text>
+
+    <g class="b b1"><rect x="134" y="76" width="286" height="44" rx="12" fill="#005c4b"/>
+      <text x="148" y="103" class="msg">Remind me to call mom at 6pm</text></g>
+
+    <g class="b typing"><rect x="16" y="132" width="70" height="34" rx="12" fill="#1f2c33"/>
+      <g fill="#9fb6ae"><circle class="dot" cx="38" cy="149" r="4"/><circle class="dot" cx="51" cy="149" r="4"/><circle class="dot" cx="64" cy="149" r="4"/></g></g>
+
+    <g class="b b2"><rect x="16" y="132" width="346" height="44" rx="12" fill="#1f2c33"/>
+      <text x="30" y="159" class="msg">Done! I'll remind you <tspan font-weight="700">today, 6:00 PM</tspan></text></g>
+
+    <g class="b b3"><rect x="16" y="188" width="252" height="44" rx="12" fill="#1f2c33"/>
+      <text x="30" y="215" class="msg"><tspan font-weight="700">Reminder:</tspan> Call mom</text></g>
+
+    <g class="b b4"><rect x="326" y="244" width="94" height="40" rx="12" fill="#005c4b"/>
+      <text x="342" y="269" class="msg">done</text>
+      <text x="386" y="269" class="meta">✓✓</text></g>
+
+    <g class="b b5"><rect x="16" y="294" width="290" height="34" rx="12" fill="#1f2c33"/>
+      <text x="30" y="316" class="msg">✓ Marked <tspan font-weight="700">Call mom</tspan> as done</text></g>
+  </g>
+</svg>

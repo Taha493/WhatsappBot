@@ -1,0 +1,38 @@
+# ── Secrets & credentials ─────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+# WhatsApp session data (equivalent to the bot's login)
+.wa-session/
+auth_info*/
+baileys_auth*/
+
+# ── Local data ────────────────────────────────────────
+# Embedded database used when DATABASE_URL is empty
+.data/
+
+# ── Dependencies & build output ───────────────────────
+node_modules/
+dist/
+*.tsbuildinfo
+
+# ── Tests & logs ──────────────────────────────────────
+coverage/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# ── Private planning & marketing material ─────────────
+plan.md
+marketing/
+
+# ── Editors & OS ──────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+.claude/

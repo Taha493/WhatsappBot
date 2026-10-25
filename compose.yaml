@@ -1,0 +1,15 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      # Only reachable from the machine itself. Use an SSH tunnel or a reverse proxy
+      # with HTTPS to open /admin and /link from elsewhere.
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - bot-data:/app/.data
+    stop_grace_period: 20s
+
+volumes:
+  bot-data:

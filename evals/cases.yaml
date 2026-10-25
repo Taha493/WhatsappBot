@@ -1,0 +1,219 @@
+# LLM evaluation cases. Run with: pnpm eval
+#
+# "Now" is fixed at Monday 26 Oct 2026, 09:00 in Asia/Karachi.
+# With `seed: true` the user already has these open tasks:
+#   #1 Submit assignment            — Tue 27 Oct, 10:00 (reminder at 10:00)
+#   #2 Prepare project presentation — Thu 29 Oct (all day)
+#   #3 Review portfolio             — Fri 30 Oct (all day)
+#   #4 Call the dentist             — no due date
+#
+# expect: every listed tool must be called with matching args.
+#   - strings match case-insensitively as substrings ("assignment" matches "Submit assignment")
+#   - "*" means "present and not empty"
+#   - arrays: every expected item must match some actual item
+# forbid: tools that must NOT be called.
+# asks: true → the bot must reply with a question and not change anything.
+
+- name: reminder with exact time
+  say: Remind me to submit my assignment tomorrow at 10 AM
+  expect:
+    - tool: createTask
+      args: { title: assignment, due: "2026-10-27T10:00", reminders: "*" }
+
+- name: relative time in hours
+  say: remind me to take the laundry out in 2 hours
+  expect:
+    - tool: createTask
+      args: { title: laundry, due: "2026-10-26T11:00", reminders: "*" }
+
+- name: task with weekday, no reminder
+  say: I need to prepare slides for the client meeting on Thursday
+  expect:
+    - tool: createTask
+      args: { title: slides, due: "2026-10-29" }
+
+- name: vague time of day
+  say: remind me to call mom tomorrow evening
+  expect:
+    - tool: createTask
+      args: { title: mom, due: "2026-10-27T19:00", reminders: "*" }
+
+- name: tonight
+  say: remind me tonight to pack my bag
+  expect:
+    - tool: createTask
+      args: { title: bag, due: "2026-10-26T21:00", reminders: "*" }
+
+- name: next week
+  say: Add "renew passport" for next Monday
+  expect:
+    - tool: createTask
+      args: { title: passport, due: "2026-11-02" }
+
+- name: high priority
+  say: Urgent - pay the electricity bill by Wednesday
+  expect:
+    - tool: createTask
+      args: { title: electricity, due: "2026-10-28", priority: high }
+
+- name: no date at all
+  say: add buy a new phone charger to my list
+  expect:
+    - tool: createTask
+      args: { title: charger }
+
+- name: reminder before due time
+  say: My flight is on Friday at 6pm, remind me 3 hours before
+  expect:
+    - tool: createTask
+      args: { title: flight, due: "2026-10-30T18:00", reminders: [{ minutesBefore: 180 }] }
+
+- name: recurring weekly
+  say: Every Monday at 9am remind me to plan the week
+  expect:
+    - tool: createTask
+      args: { title: plan, recurrence: WEEKLY, reminders: "*" }
+
+- name: recurring daily
+  say: remind me to drink water every day at 2pm
+  expect:
+    - tool: createTask
+      args: { title: water, due: "2026-10-26T14:00", recurrence: DAILY, reminders: "*" }
+
+- name: list this week
+  seed: true
+  say: What do I have to do this week?
+  expect:
+    - tool: listTasks
+      args: { to: "2026-11-01" }
+  forbid: [createTask, deleteTasks, completeTask]
+
+- name: list today
+  seed: true
+  say: anything for today?
+  expect:
+    - tool: listTasks
+      args: { from: "2026-10-26", to: "2026-10-26" }
+
+- name: list completed tasks via history
+  seed: true
+  say: What did I finish last week?
+  expect:
+    - tool: getHistory
+      args: { from: "2026-10-19", to: "2026-10-25" }
+
+- name: complete by reference
+  seed: true
+  say: Mark the assignment as completed.
+  expect:
+    - tool: completeTask
+      args: { taskNumber: 1 }
+
+- name: complete by number
+  seed: true
+  say: finished 3
+  expect:
+    - tool: completeTask
+      args: { taskNumber: 3 }
+
+- name: reschedule
+  seed: true
+  say: Move the presentation to Friday
+  expect:
+    - tool: updateTask
+      args: { taskNumber: 2, due: "2026-10-30" }
+
+- name: change time
+  seed: true
+  say: actually the assignment is due at 11, not 10
+  expect:
+    - tool: updateTask
+      args: { taskNumber: 1, due: "2026-10-27T11:00" }
+
+- name: rename
+  seed: true
+  say: rename the dentist task to "book dentist appointment"
+  expect:
+    - tool: updateTask
+      args: { taskNumber: 4, title: dentist appointment }
+
+- name: give a due date to an undated task
+  seed: true
+  say: I'll call the dentist on Wednesday at 4pm
+  expect:
+    - tool: updateTask
+      args: { taskNumber: 4, due: "2026-10-28T16:00" }
+
+- name: delete one
+  seed: true
+  say: delete the portfolio review
+  expect:
+    - tool: deleteTasks
+      args: { taskNumbers: [3] }
+
+- name: bulk delete asks first
+  seed: true
+  say: delete all my tasks
+  asks: true
+
+- name: add reminder to existing task
+  seed: true
+  say: remind me about the presentation on Wednesday at 8pm
+  expect:
+    - tool: addReminder
+      args: { taskNumber: 2, at: "2026-10-28T20:00" }
+  forbid: [createTask]
+
+- name: cancel reminder
+  seed: true
+  say: I don't need a reminder for the assignment anymore
+  expect:
+    - tool: cancelReminders
+      args: { taskNumber: 1 }
+  forbid: [deleteTasks, completeTask]
+
+- name: undo
+  seed: true
+  say: undo that
+  expect:
+    - tool: undoLastAction
+
+- name: set timezone from city
+  say: I live in London actually
+  expect:
+    - tool: updatePreferences
+      args: { timezone: Europe/London }
+
+- name: daily summary on
+  say: send me a summary of my tasks every morning at 7:30
+  expect:
+    - tool: updatePreferences
+      args: { dailySummary: true, dailySummaryTime: "07:30" }
+
+- name: daily summary off
+  say: stop the daily summary please
+  expect:
+    - tool: updatePreferences
+      args: { dailySummary: false }
+
+- name: ambiguous time
+  say: remind me to call Ali at 7
+  asks: true
+
+- name: ambiguous task reference
+  seed: true
+  say: mark it as done
+  asks: true
+
+- name: chit-chat does nothing
+  seed: true
+  say: thanks, you're the best!
+  forbid: [createTask, updateTask, deleteTasks, completeTask, addReminder]
+
+- name: two tasks in one message
+  say: Remind me to buy milk at 6pm and to email Sara tomorrow morning
+  expect:
+    - tool: createTask
+      args: { title: milk, due: "2026-10-26T18:00" }
+    - tool: createTask
+      args: { title: Sara, due: "2026-10-27T09:00" }

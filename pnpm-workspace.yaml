@@ -1,0 +1,4 @@
+allowBuilds:
+  baileys: true
+  esbuild: true
+  protobufjs: true
